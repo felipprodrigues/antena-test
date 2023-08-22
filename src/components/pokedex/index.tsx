@@ -18,8 +18,10 @@ import {
 import { getColorForType } from "@/helpers/colorParser";
 import Link from "next/link";
 import Pagination from "../pagination";
+import { getBaseStat } from "@/utils/pokemonUtils";
 
 interface Pokemon {
+  id: any;
   name: string;
   url: string;
   sprites: {
@@ -79,74 +81,77 @@ export default function PokedexContent() {
     setCurrentPage(currentPage + 1);
   };
 
-  const getBaseStat = (pokemon: Pokemon, statName: string) => {
-    const stat = pokemon.stats.find((stat) => stat.stat.name === statName);
-    return stat ? stat.base_stat : 0;
-  };
-
   return (
     <>
       <CardContainer>
-        {detailedPokemonData.map((pokemon: Pokemon) => (
-          <Card key={pokemon.name}>
-            <div>
-              <Image
-                src={pokemon.sprites.front_default}
-                alt={`Imagem do ${pokemon.name}`}
-                width={110}
-                height={110}
-              />
-            </div>
+        {detailedPokemonData.map((pokemon: Pokemon) => {
+          return (
+            <Card key={pokemon.name}>
+              <div>
+                <Image
+                  src={pokemon.sprites.front_default}
+                  alt={`Imagem do ${pokemon.name}`}
+                  width={110}
+                  height={110}
+                />
+              </div>
 
-            <div>
-              <CardStats>
-                <TitleTag>
-                  <h2>{capitalize(pokemon.name)}</h2>
+              <div>
+                <CardStats>
+                  <TitleTag>
+                    <h2>{capitalize(pokemon.name)}</h2>
 
-                  <div>
-                    {pokemon.types.map((type: any) => (
-                      <div key={type.type.name}>
-                        <span
-                          css={{ $$fontColor: getColorForType(type.type.name) }}
-                        >
-                          {type.type.name}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </TitleTag>
+                    <div>
+                      {pokemon.types.map((type: any) => (
+                        <div key={type.type.name}>
+                          <span
+                            css={{
+                              $$fontColor: getColorForType(type.type.name),
+                            }}
+                          >
+                            {type.type.name}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </TitleTag>
 
-                <Stats>
-                  <div>
-                    <span>HP</span>
-                    <h4>{getBaseStat(pokemon, "hp")}</h4>
-                  </div>
-                  <div>
-                    <span>Atq.</span>
-                    <h4>{getBaseStat(pokemon, "attack")}</h4>
-                  </div>
-                  <div>
-                    <span>Defesa</span>
-                    <h4>{getBaseStat(pokemon, "defense")}</h4>
-                  </div>
-                </Stats>
+                  <Stats>
+                    <div>
+                      <span>HP</span>
+                      <h4>{getBaseStat(pokemon, "hp")}</h4>
+                    </div>
+                    <div>
+                      <span>Atq.</span>
+                      <h4>{getBaseStat(pokemon, "attack")}</h4>
+                    </div>
+                    <div>
+                      <span>Defesa</span>
+                      <h4>{getBaseStat(pokemon, "defense")}</h4>
+                    </div>
+                  </Stats>
 
-                {/* <div>
-                abilities:
-                {pokemon.abilities.map((ability: any) => (
-                  <span key={ability.ability.name}>{ability.ability.name}</span>
-                ))}
-              </div> */}
-              </CardStats>
-            </div>
+                  {/* <div>
+            abilities:
+            {pokemon.abilities.map((ability: any) => (
+              <span key={ability.ability.name}>{ability.ability.name}</span>
+            ))}
+          </div> */}
+                </CardStats>
+              </div>
 
-            <RedirectButton>
-              <Link href={`/pokedex/${pokemon.name}`} passHref>
-                Saber mais
-              </Link>
-            </RedirectButton>
-          </Card>
-        ))}
+              <RedirectButton>
+                <Link
+                  href={`/pokedex/${pokemon.id}`}
+                  as={`/pokedex/${pokemon.id}`}
+                  passHref
+                >
+                  Saber mais
+                </Link>
+              </RedirectButton>
+            </Card>
+          );
+        })}
       </CardContainer>
 
       <Pagination handlePrev={handlePreviousPage} handleNext={handleNextPage} />

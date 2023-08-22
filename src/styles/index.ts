@@ -20,6 +20,9 @@ export const {
 
       green500: "#00875f",
       green300: "#00b37e",
+
+      // borderBottomHover: "#c4c4cc", // Change to your desired hover color
+      // borderBottomActive: "#e1e1e6", // Change to your desired active color
     },
     fontSizes: {
       md: "1.125rem",

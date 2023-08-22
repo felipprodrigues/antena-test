@@ -15,9 +15,6 @@ import axios from "axios";
 
 // Components
 import Sidepanel from "@/components/sidepanel";
-import SearchBar from "@/components/searchBar";
-import CategoryCards from "@/components/cards";
-import PokedexContent from "@/components/pokedex";
 
 interface HomeProps {
   isSidepanelOpen: boolean;
@@ -76,16 +73,14 @@ export default function App({ Component, pageProps }: AppProps) {
           </div>
         </Header>
 
-        {/* // sidepanel favoritando os cards */}
         <Sidepanel />
 
-        <ContainerMain>
+        {/* <ContainerMain>
           <SearchBar />
 
-          {/* <CategoryCards /> */}
 
           <PokedexContent />
-        </ContainerMain>
+        </ContainerMain> */}
 
         <Component {...pageProps} />
       </Container>

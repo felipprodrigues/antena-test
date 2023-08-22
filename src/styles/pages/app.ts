@@ -41,29 +41,6 @@ export const Header = styled("header", {
       transform: "scale(1)",
     },
   },
-
-  //   position: "relative",
-
-  //   transition: "all .15s linear",
-
-  //   svg: {
-  //     color: "$$svgColor",
-  //   },
-
-  //   "& > div ": {
-  //     position: "absolute",
-  //     top: "-10px",
-  //     right: "-10px",
-
-  //     padding: ".25rem",
-  //     backgroundColor: "$green300",
-  //     textAlign: "center",
-  //     borderRadius: "50%",
-  //     width: "25px",
-  //     height: "25px",
-  //     color: "$white",
-  //   },
-  // },
 });
 
 export const ContainerMain = styled("main", {
