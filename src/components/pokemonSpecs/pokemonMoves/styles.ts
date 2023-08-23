@@ -4,7 +4,6 @@ export const Container = styled("div", {
   table: {
     borderCollapse: "collapse",
     width: "100%",
-    marginBottom: "20px",
 
     th: {
       color: "$gray300",

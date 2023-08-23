@@ -1,15 +1,27 @@
 import { styled } from "@stitches/react";
 
 export const Container = styled("aside", {
-  maxWidth: "30%",
-  width: "100%",
   padding: "2rem",
   height: "100vh",
   gap: "1rem",
 
   background: "$gray800",
 
-  // display: "flex",
+  width: "100%",
+  maxWidth: "80%",
+
+  "@media (min-width: 768px)": {
+    maxWidth: "50%",
+  },
+
+  "@media (min-width: 1279px)": {
+    maxWidth: "40%",
+  },
+
+  "@media (min-width: 1400px)": {
+    maxWidth: "30%",
+  },
+
   flexDirection: "column",
 
   position: "absolute",
@@ -50,15 +62,19 @@ export const ContainerInfo = styled("div", {
 
   h2: {
     textAlign: "center",
+    fontSize: "clamp(1.25rem, 3vw, 1.5rem)",
   },
 
-  div: {
+  "& > div": {
     display: "flex",
     gap: "1rem",
   },
 });
 
 export const ContainerImage = styled("div", {
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
   background: "linear-gradient(180deg, #1ea4b3 0%, #7465d4 100%)",
   borderRadius: 8,
 });
@@ -68,78 +84,30 @@ export const ContainerDetails = styled("div", {
   flexDirection: "column",
   justifyContent: "space-between",
 
-  span: {
-    fontSize: "$lg",
-  },
-
   "span:first-of-type": {
     color: "$gray300",
+    fontSize: "clamp(1.125rem, 3vw, 1.25rem)",
   },
 
   "span:last-of-type": {
     color: "$white",
     fontWeight: "bold",
-  },
 
-  a: {
-    color: "$green500",
-    border: "none",
-    backgroundColor: "transparent",
-    cursor: "pointer",
-    transition: "all .25s linear",
-
-    "&:hover": {
-      color: "$green300",
-    },
+    fontSize: "clamp(.875rem, 3vw, 1.125rem)",
   },
 });
 
-export const ContainerButton = styled("div", {
+export const DeleteButton = styled("div", {
   display: "flex",
-  flexDirection: "column",
-  gap: "1rem",
+  alignItems: "center",
+  gap: ".25rem",
+  cursor: "pointer",
 
-  div: {
-    display: "flex",
-    justifyContent: "space-between",
+  color: "$gray500",
 
-    span: {
-      fontSize: "$md",
-    },
+  transition: "all .15s linear",
 
-    "span:not(:last-of-type)": {
-      color: "$gray300",
-    },
-  },
-
-  "div:last-of-type": {
-    "span, h2": {
-      fontWeight: "bold",
-      color: "$white",
-    },
-  },
-
-  "& > a": {
-    marginTop: "1.5rem",
-    backgroundColor: "$green500",
-    border: 0,
-    color: "$white",
-    borderRadius: 8,
-    padding: "1.25rem",
-    cursor: "pointer",
-    fontWeight: "bold",
-    fontSize: "$md",
-    transition: "all .07s linear",
-    width: "100%",
-    textAlign: "center",
-
-    "&:disabled": {
-      opacity: 0.6,
-      cursor: "not-allowed",
-    },
-
-    "&:not(:disabled):hover": {
-      backgroundColor: "$green300",
-    },
+  "&:hover": {
+    color: "red",
   },
 });

@@ -3,8 +3,16 @@ import { styled } from "@stitches/react";
 export const Container = styled("div", {
   ul: {
     display: "grid",
-    gridTemplateColumns: "repeat(2,1fr)",
     gap: "2rem",
+    gridTemplateColumns: "1fr",
+
+    "@media (min-width: 768px)": {
+      gridTemplateColumns: "repeat(2, 1fr)",
+    },
+
+    "@media (min-width: 1024px)": {
+      gridTemplateColumns: "repeat(3, 1fr)",
+    },
 
     listStyleType: "none",
 
@@ -25,7 +33,9 @@ export const Container = styled("div", {
     },
 
     "& > li:last-of-type": {
-      gridColumn: "span 2",
+      "@media (min-width: 768px) and (max-width: 1023px)": {
+        gridColumn: "span 2",
+      },
     },
   },
 });

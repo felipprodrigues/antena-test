@@ -1,11 +1,21 @@
 import { useContext, useState, useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 
+// Components
 import { PokedexContext } from "@/pages/_app";
+import Pagination from "../pagination";
 
+// Utils
+import { RotatingLines } from "react-loader-spinner";
+import { getBaseStat } from "@/utils/pokemonUtils";
+
+// Helpers
 import { capitalize } from "@/helpers/capitalize";
+import { getColorForType } from "@/helpers/colorParser";
 
+// Styles
 import {
   Card,
   CardContainer,
@@ -13,15 +23,8 @@ import {
   RedirectButton,
   Stats,
   TitleTag,
-  // TitleTagType,
+  TitleTagLabel,
 } from "./styles";
-
-import { getColorForType } from "@/helpers/colorParser";
-import Link from "next/link";
-import Pagination from "../pagination";
-import { getBaseStat } from "@/utils/pokemonUtils";
-// import { TitleTagType } from "@/styles/pages/pokedex";
-
 interface Pokemon {
   id: any;
   name: string;
@@ -36,12 +39,9 @@ interface Pokemon {
 export default function PokedexContent() {
   const { handleInputChange }: any = useContext(PokedexContext);
 
-  console.log(handleInputChange, "dentro do pokedex");
-
   const [detailedPokemonData, setDetailedPokemonData] = useState([]);
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 21;
+  const itemsPerPage = 25;
 
   useEffect(() => {
     async function fetchDetailedPokemonData() {
@@ -68,10 +68,6 @@ export default function PokedexContent() {
     fetchDetailedPokemonData();
   }, [currentPage, handleInputChange]);
 
-  if (!detailedPokemonData || !detailedPokemonData.length) {
-    return <Card>No Pokemon data available.</Card>;
-  }
-
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -81,6 +77,20 @@ export default function PokedexContent() {
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
   };
+
+  if (!detailedPokemonData || !detailedPokemonData.length) {
+    return (
+      <Card id="isLoader">
+        <RotatingLines
+          strokeColor="grey"
+          strokeWidth="4"
+          animationDuration="0.75"
+          width="84"
+          visible={true}
+        />
+      </Card>
+    );
+  }
 
   return (
     <>
@@ -104,14 +114,14 @@ export default function PokedexContent() {
 
                     <div>
                       {pokemon.types.map((type: any) => (
-                        <div
+                        <TitleTagLabel
                           key={type.type.name}
                           css={{
                             $$borderColor: getColorForType(type.type.name),
                           }}
                         >
                           <span>{type.type.name}</span>
-                        </div>
+                        </TitleTagLabel>
                       ))}
                     </div>
                   </TitleTag>
@@ -130,13 +140,6 @@ export default function PokedexContent() {
                       <h4>{getBaseStat(pokemon, "defense")}</h4>
                     </div>
                   </Stats>
-
-                  {/* <div>
-            abilities:
-            {pokemon.abilities.map((ability: any) => (
-              <span key={ability.ability.name}>{ability.ability.name}</span>
-            ))}
-          </div> */}
                 </CardStats>
               </div>
 

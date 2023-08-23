@@ -1,20 +1,40 @@
 import { PokedexContext } from "@/pages/_app";
-
 import { useContext } from "react";
+import Image from "next/image";
+
+// Helpers
+import { capitalize } from "@/helpers/capitalize";
+import { toast } from "react-toastify";
+
+// Icons
+import { Trash, X } from "phosphor-react";
+
+// Styles
 import {
   Container,
-  ContainerButton,
   ContainerInfo,
   ContainerImage,
   ContainerDetails,
+  DeleteButton,
 } from "./styles";
-import { X } from "phosphor-react";
-
-import pokedexImage from "@/assets/pokedexImage.png";
-import Image from "next/image";
 
 export default function Sidepanel() {
-  const { isSidepanelOpen, toggleSidepanel } = useContext(PokedexContext);
+  const {
+    isSidepanelOpen,
+    toggleSidepanel,
+    myPokedexPokemons,
+    setMyPokedexPokemons,
+  } = useContext(PokedexContext);
+
+  const removeFromPokedex = (id: number) => {
+    const updatedPokemons = myPokedexPokemons.filter(
+      (pokemon: any) => pokemon.id !== id
+    );
+
+    setMyPokedexPokemons(updatedPokemons);
+
+    toast.success("Pokemon successfully removed from your list!");
+  };
 
   return (
     <Container
@@ -24,43 +44,38 @@ export default function Sidepanel() {
       }}
     >
       <div>
-        <X size={24} onClick={toggleSidepanel} />
+        <X size={24} onClick={toggleSidepanel} />{" "}
       </div>
 
       <div>
         <ContainerInfo>
-          <h2>Meus Pokemons</h2>
-          {/* {cart.map((product: any) => {
-            return (
-              <> */}
-          <div>
-            <ContainerImage>
-              <Image src={pokedexImage} width={100} height={100} alt="" />
-            </ContainerImage>
+          <h2>My Pokemons</h2>
 
-            <ContainerDetails>
-              <span>Pokemon name</span>
+          {myPokedexPokemons.map((pokemon: any) => (
+            <div key={pokemon.id}>
+              {" "}
+              <ContainerImage>
+                <Image
+                  src={pokemon.img}
+                  width={100}
+                  height={100}
+                  alt={pokemon.name}
+                />
+              </ContainerImage>
+              <ContainerDetails>
+                <span>{capitalize(pokemon.name)}</span>
+                <span>
+                  {pokemon.id < 10 ? `#0${pokemon.id}` : `#${pokemon.id}`}
+                </span>
 
-              {/* <a onClick={() => removeItemFromCart(product.id)}>Remover</a> */}
-            </ContainerDetails>
-          </div>
-          {/* </>
-            );
-          })} */}
+                <DeleteButton onClick={() => removeFromPokedex(pokemon.id)}>
+                  <Trash size={16} />
+                  Remove
+                </DeleteButton>
+              </ContainerDetails>
+            </div>
+          ))}
         </ContainerInfo>
-
-        <ContainerButton>
-          {/* <div>
-            <span>Quantidade</span>
-            <span>{cart.length} itens</span>
-          </div>
-          <div>
-            <span>Valor total</span>
-            <h2>{formattedUnitPrice}</h2>
-          </div>
-
-          <a onClick={handlePurchase}>Finalizar compra</a> */}
-        </ContainerButton>
       </div>
     </Container>
   );

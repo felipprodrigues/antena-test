@@ -22,8 +22,7 @@ export const Card = styled("div", {
   cursor: "pointer",
   transition: "all .15s linear",
 
-  border: "2px solid",
-  borderColor: "$$borderColor",
+  border: "2px solid $$borderColor",
 
   "&:hover": {
     opacity: "brightness(.7)",

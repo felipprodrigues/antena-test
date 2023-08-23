@@ -5,6 +5,7 @@ export const Container = styled("div", {
   flexDirection: "column",
 
   gap: "1.5rem",
+  marginBottom: "1.5rem",
 
   h3: {
     color: "$gray300",

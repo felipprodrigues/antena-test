@@ -15,6 +15,7 @@ export const {
 
       gray900: "#121214",
       gray800: "#202024",
+      gray500: "#727278",
       gray300: "#c4c4cc",
       gray100: "#e1e1e6",
 
@@ -27,12 +28,6 @@ export const {
       lg: "1.25rem",
       xl: "1.5rem",
       "2xl": "2rem",
-    },
-    breakpoints: {
-      bp1: "(max-width: 639px)",
-      bp2: "(max-width: 767px)",
-      bp3: "(max-width: 1023px)",
-      bp4: "(max-width: 1279px)",
     },
   },
 });
