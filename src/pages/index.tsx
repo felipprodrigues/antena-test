@@ -1,7 +1,9 @@
 import PokedexContent from "@/components/pokedex";
 import SearchBar from "@/components/searchBar";
-import { ContainerMain } from "@/styles/pages/app";
+// import { ContainerMain } from "@/styles/pages";
 import Head from "next/head";
+
+import { ContainerMain } from "@/styles/pages/app";
 
 export default function Home() {
   return (

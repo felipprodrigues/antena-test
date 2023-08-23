@@ -20,21 +20,19 @@ export const {
 
       green500: "#00875f",
       green300: "#00b37e",
-
-      // borderBottomHover: "#c4c4cc", // Change to your desired hover color
-      // borderBottomActive: "#e1e1e6", // Change to your desired active color
     },
     fontSizes: {
+      sm: "0.875rem",
       md: "1.125rem",
       lg: "1.25rem",
       xl: "1.5rem",
       "2xl": "2rem",
     },
     breakpoints: {
-      bp1: `(min-width: 640px)`,
-      bp2: `(min-width: 768px)`,
-      bp3: `(min-width: 1024px)`,
-      bp4: `(min-width: 1280px)`,
+      bp1: "(max-width: 639px)",
+      bp2: "(max-width: 767px)",
+      bp3: "(max-width: 1023px)",
+      bp4: "(max-width: 1279px)",
     },
   },
 });

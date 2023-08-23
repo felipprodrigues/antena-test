@@ -3,6 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+// Styles
 import { ContainerMain } from "@/styles/pages/app";
 import {
   Container,
@@ -10,51 +11,50 @@ import {
   ContainerHead,
   ContainerToggleBody,
   ContainerToggleHead,
+  ContainerToggleItems,
   ImageHolder,
   TitleHolder,
 } from "@/styles/pages/pokedex";
 
-import {
-  CaretLeft,
-  Compass,
-  Fire,
-  FireSimple,
-  Heart,
-  Lightning,
-  Shield,
-  ShieldPlus,
-} from "phosphor-react";
+// Icons
+import { CaretLeft, Compass, Heart } from "phosphor-react";
+
+// Helpers
 import { capitalize } from "@/helpers/capitalize";
-import { Pokemon, getBaseStat } from "@/utils/pokemonUtils";
+
+// Components
+import PokemonMoves from "@/components/pokemonSpecs/pokemonMoves";
+import PokemonEvolutions from "@/components/pokemonSpecs/pokemonEvolutions";
+import PokemonStats from "@/components/pokemonSpecs/pokemonStats";
 
 function PokemonDetails() {
-  const router = useRouter();
-  const { id } = router.query;
-
   const [pokemonData, setPokemonData] = useState(null);
   const [activeSection, setActiveSection] = useState("Stats");
   const [pokemonSpecies, setPokemonSpecies] = useState("");
 
+  const router = useRouter();
+  const { id } = router.query;
+
   useEffect(() => {
     if (id) {
-      axios
-        .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-        .then((response) => {
-          setPokemonData(response.data);
-
-          axios.get(response.data.species.url).then((speciesResponse) => {
-            setPokemonSpecies(speciesResponse.data);
-          });
-        })
-        .catch((error) => {
-          console.error("Erro:", error);
-        });
+      fetchDataForPokemon(id);
     }
   }, [id]);
 
-  if (!pokemonData) {
-    return <div>Loading...</div>;
-  }
+  const fetchDataForPokemon = (id: string) => {
+    axios
+      .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+      .then((response) => {
+        setPokemonData(response.data);
+
+        axios.get(response.data.species.url).then((speciesResponse) => {
+          setPokemonSpecies(speciesResponse.data);
+        });
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   const handleSectionClick = (sectionName: string) => {
     setActiveSection(sectionName);
@@ -64,9 +64,12 @@ function PokemonDetails() {
     ? pokemonSpecies?.habitat?.name
     : "Unknown";
 
+  if (!pokemonData) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <ContainerMain>
-      {/* <pre>{JSON.stringify(pokemonData, null, 2)}</pre> */}
       <Container>
         <ContainerHead>
           <CaretLeft size={24} />
@@ -92,7 +95,9 @@ function PokemonDetails() {
             {pokemonData?.types.map((item: { type: { name: string } }) => {
               return (
                 <>
-                  <span>{item.type.name}</span>
+                  <div>
+                    <span>{item.type.name}</span>
+                  </div>
                 </>
               );
             })}
@@ -108,69 +113,24 @@ function PokemonDetails() {
           <ContainerToggleHead>
             <ul>
               {["Stats", "Moves", "Evolutions"].map((section) => (
-                <li
+                <ContainerToggleItems
                   key={section}
                   onClick={() => handleSectionClick(section)}
                   className={activeSection === section ? "active" : ""}
                 >
                   {section}
-                </li>
+                </ContainerToggleItems>
               ))}
             </ul>
           </ContainerToggleHead>
 
           <ContainerToggleBody>
             {activeSection === "Stats" && (
-              <>
-                <div id="stats_container">
-                  <div>
-                    <span>HP</span>
-                    <h4>
-                      <Heart size={16} color={"#FF7377"} />
-                      {getBaseStat(pokemonData, "hp")}
-                    </h4>
-                  </div>
-                  <div>
-                    <span>Attack</span>
-                    <h4>
-                      <Fire size={16} color={"#fdcf58"} />
-                      {getBaseStat(pokemonData, "attack")}
-                    </h4>
-                  </div>
-                  <div>
-                    <span>Defense</span>
-                    <h4>
-                      <Shield size={16} color={"#00FFFF"} />
-                      {getBaseStat(pokemonData, "defense")}
-                    </h4>
-                  </div>
-                  <div>
-                    <span>Special Attack</span>
-                    <h4>
-                      <FireSimple size={16} color={"#fdcf58"} />
-                      {getBaseStat(pokemonData, "special-attack")}
-                    </h4>
-                  </div>
-                  <div>
-                    <span>Special Defense</span>
-                    <h4>
-                      <ShieldPlus size={16} color={"#00FFFF"} />
-                      {getBaseStat(pokemonData, "special-defense")}
-                    </h4>
-                  </div>
-                  <div>
-                    <span>Speed</span>
-                    <h4>
-                      <Lightning size={16} color={"#8B95C9"} />
-                      {getBaseStat(pokemonData, "speed")}
-                    </h4>
-                  </div>
-                </div>
-              </>
+              <PokemonStats pokemonData={pokemonData} />
             )}
-            {activeSection === "Moves" && <div>Moves section content</div>}
+            {activeSection === "Moves" && <PokemonMoves pokemonId={id} />}
             {activeSection === "Evolutions" && (
-              <div>Evolutions section content</div>
+              <PokemonEvolutions pokemonId={id} />
             )}
           </ContainerToggleBody>
         </ContainerBody>

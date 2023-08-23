@@ -1,6 +1,6 @@
 // Styles
-import { globalStyles } from "@/styles/globals";
-import { Container, ContainerMain, Header } from "@/styles/pages/app";
+import { globalStyles } from "@/styles/global";
+import { Container, Header } from "@/styles/pages/app";
 
 // Next
 import type { AppProps } from "next/app";
@@ -20,6 +20,8 @@ interface HomeProps {
   isSidepanelOpen: boolean;
   toggleSidepanel: () => void;
   setHandleInputChange: (string: string) => void;
+  handleInputChange: string;
+  pokemonData: any;
 }
 
 export const PokedexContext = createContext({} as HomeProps);
@@ -42,14 +44,10 @@ export default function App({ Component, pageProps }: AppProps) {
         `https://pokeapi.co/api/v2/pokemon?offset=0&limit=50`
       );
       setPokemonData(fetchData.data);
-
-      console.log(fetchData.data, "dados pokemno");
     } catch (error) {
       console.error("Erro:", error);
     }
   }
-
-  console.log(handleInputChange, "aqui");
 
   useEffect(() => {
     fetchPokemonApi();
@@ -74,13 +72,6 @@ export default function App({ Component, pageProps }: AppProps) {
         </Header>
 
         <Sidepanel />
-
-        {/* <ContainerMain>
-          <SearchBar />
-
-
-          <PokedexContent />
-        </ContainerMain> */}
 
         <Component {...pageProps} />
       </Container>

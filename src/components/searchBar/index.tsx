@@ -8,8 +8,6 @@ export default function SearchBar() {
 
   return (
     <Container>
-      <h3>Qual Pokémon você está procurando?</h3>
-
       <div>
         <div>
           <MagnifyingGlass size={16} />
@@ -17,7 +15,7 @@ export default function SearchBar() {
         <input
           type="text"
           onChange={({ target }) => setHandleInputChange(target.value)}
-          placeholder="Procurar pokémon"
+          placeholder="Find Pokemon"
         />
       </div>
     </Container>
