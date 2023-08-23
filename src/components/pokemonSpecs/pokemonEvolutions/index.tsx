@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
+
+// Styles
 import { Container } from "./styles";
+
+// Helpers
 import { capitalize } from "@/helpers/capitalize";
 
 interface Evolution {

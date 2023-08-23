@@ -1,4 +1,6 @@
 import React from "react";
+
+// Icons
 import {
   Heart,
   Fire,
@@ -7,7 +9,11 @@ import {
   ShieldPlus,
   Lightning,
 } from "phosphor-react";
+
+// Utils
 import { getBaseStat } from "@/utils/pokemonUtils";
+
+// Styles
 import { ContainerStats } from "./styles";
 
 interface PokemonStatsProps {

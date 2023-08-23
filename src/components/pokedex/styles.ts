@@ -3,15 +3,19 @@ import { styled } from "@stitches/react";
 export const CardContainer = styled("div", {
   display: "grid",
 
-  gridTemplateColumns: "repeat(3, 1fr)",
+  gridTemplateColumns: "1fr",
 
-  "@bp1": {
-    gridTemplateColumns: "1fr",
-  },
-  "@bp3": {
+  "@media (min-width: 768px)": {
     gridTemplateColumns: "repeat(2, 1fr)",
   },
-  "@bp4": {},
+
+  "@media (min-width: 1279px)": {
+    gridTemplateColumns: "repeat(3, 1fr)",
+  },
+
+  "@media (min-width: 1400px)": {
+    gridTemplateColumns: "repeat(4, 1fr)",
+  },
 
   gap: "5rem 1.5rem",
 });
@@ -34,6 +38,11 @@ export const Card = styled("div", {
     display: "flex",
     justifyContent: "center",
   },
+
+  "&#isLoader": {
+    display: "flex !important",
+    justifyContent: "center !important",
+  },
 });
 
 export const CardStats = styled("div", {
@@ -50,26 +59,26 @@ export const TitleTag = styled("div", {
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
+  gap: "1rem",
 
   h2: {
     color: "$gray300",
   },
 
   div: {
-    padding: ".5rem",
-
     display: "flex",
     gap: "1rem",
+  },
+});
 
-    div: {
-      border: "1px solid",
-      borderRadius: "10px",
+export const TitleTagLabel = styled("div", {
+  border: "1px solid $$borderColor",
+  padding: ".5rem",
+  borderRadius: "10px",
 
-      span: {
-        fontSize: "clamp(12px, 1.5vw, 15px)",
-        color: "$$fontColor",
-      },
-    },
+  span: {
+    color: "$gray300",
+    fontSize: "clamp(.875rem, 3vw, 1.125rem)",
   },
 });
 
@@ -84,7 +93,7 @@ export const Stats = styled("div", {
     gap: ".5rem",
 
     span: {
-      fontSize: "clamp(12px, 1.5vw, 15px)",
+      fontSize: "clamp(0.875rem, 3vw, 1.125rem)",
       color: "$gray300",
     },
 
@@ -96,10 +105,8 @@ export const Stats = styled("div", {
 });
 
 export const RedirectButton = styled("div", {
-  // position: "absolute",
   display: "flex",
   justifyContent: "center",
-  // bottom: "-.85rem",
 
   width: "100%",
 

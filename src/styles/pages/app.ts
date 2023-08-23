@@ -11,16 +11,12 @@ export const Container = styled("div", {
 });
 
 export const Header = styled("header", {
-  padding: "2rem",
-
-  width: "calc(80% - 3.5rem)",
-
-  "@media (min-width: 767px)": {
-    width: "calc(95% - 2.5rem)",
-  },
+  padding: "2rem 0",
+  width: "calc(100% - 1rem)",
 
   "@media (min-width: 1023px)": {
     width: "calc(85% - 3.5rem)",
+    padding: "2rem",
   },
 
   "@media (min-width: 1279px)": {
@@ -30,6 +26,10 @@ export const Header = styled("header", {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+
+  "& > h1": {
+    fontSize: "clamp(1.25rem, 3vw, 2rem)",
+  },
 
   "& > div": {
     backgroundColor: "$gray800",

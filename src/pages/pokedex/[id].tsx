@@ -1,7 +1,11 @@
-import { useEffect, useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+// Context
+import { PokedexContext } from "../_app";
 
 // Styles
 import { ContainerMain } from "@/styles/pages/app";
@@ -14,6 +18,7 @@ import {
   ContainerToggleItems,
   ImageHolder,
   TitleHolder,
+  TitleTag,
 } from "@/styles/pages/pokedex";
 
 // Icons
@@ -21,11 +26,20 @@ import { CaretLeft, Compass, Heart } from "phosphor-react";
 
 // Helpers
 import { capitalize } from "@/helpers/capitalize";
+import { toast } from "react-toastify";
 
 // Components
 import PokemonMoves from "@/components/pokemonSpecs/pokemonMoves";
 import PokemonEvolutions from "@/components/pokemonSpecs/pokemonEvolutions";
 import PokemonStats from "@/components/pokemonSpecs/pokemonStats";
+import { css } from "styled-components";
+import { getColorForType } from "@/helpers/colorParser";
+
+export interface PokemonList {
+  name: string;
+  id: number;
+  img: string;
+}
 
 function PokemonDetails() {
   const [pokemonData, setPokemonData] = useState(null);
@@ -35,11 +49,23 @@ function PokemonDetails() {
   const router = useRouter();
   const { id } = router.query;
 
+  const { setMyPokedexPokemons, myPokedexPokemons } =
+    useContext(PokedexContext);
+
   useEffect(() => {
     if (id) {
       fetchDataForPokemon(id);
     }
+
+    const savedPokedex = localStorage.getItem("mypokedex");
+    if (savedPokedex) {
+      setMyPokedexPokemons(JSON.parse(savedPokedex));
+    }
   }, [id]);
+
+  useEffect(() => {
+    localStorage.setItem("mypokedex", JSON.stringify(myPokedexPokemons));
+  }, [myPokedexPokemons]);
 
   const fetchDataForPokemon = (id: string) => {
     axios
@@ -68,15 +94,48 @@ function PokemonDetails() {
     return <div>Loading...</div>;
   }
 
+  const navigateBack = () => {
+    router.back();
+  };
+
+  const addPokemonToCollection = () => {
+    const newFavoritePokemon: PokemonList = {
+      name: pokemonData.name,
+      id: pokemonData.id,
+      img: pokemonData.sprites.front_default,
+    };
+
+    const isAlreadyAdded = myPokedexPokemons.some(
+      (pokemon: PokemonList) => pokemon.id === newFavoritePokemon.id
+    );
+
+    if (isAlreadyAdded) {
+      toast.warning("This Pokemon is already in your collection!");
+    } else {
+      toast.success("Pokemon successfully added to your list!");
+
+      setMyPokedexPokemons((prevPokedex: PokemonList[]) => [
+        ...prevPokedex,
+        newFavoritePokemon,
+      ]);
+    }
+  };
+
   return (
     <ContainerMain>
       <Container>
         <ContainerHead>
-          <CaretLeft size={24} />
+          <CaretLeft id="goBackButton" size={24} onClick={navigateBack} />
 
-          <span>#00{pokemonData.id}</span>
+          <span>
+            <b>
+              {pokemonData.id < 10
+                ? `#0${pokemonData.id}`
+                : `#${pokemonData.id}`}
+            </b>
+          </span>
 
-          <Heart size={24} />
+          <Heart id="addToPokedex" size={24} onClick={addPokemonToCollection} />
         </ContainerHead>
 
         <ImageHolder>
@@ -95,16 +154,18 @@ function PokemonDetails() {
             {pokemonData?.types.map((item: { type: { name: string } }) => {
               return (
                 <>
-                  <div>
+                  <TitleTag
+                    css={{ $$borderColor: getColorForType(item.type.name) }}
+                  >
                     <span>{item.type.name}</span>
-                  </div>
+                  </TitleTag>
                 </>
               );
             })}
           </div>
 
-          <div>
-            <Compass size={16} />
+          <div id="locationId">
+            <Compass size={20} color="#727278" />
             <span>{capitalize(habitatDescription)}</span>
           </div>
         </TitleHolder>
