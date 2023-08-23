@@ -45,11 +45,11 @@ export default function App({ Component, pageProps }: AppProps) {
   async function fetchPokemonApi() {
     try {
       const fetchData = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=0&limit=50`
+        `https://pokeapi.co/api/v2/pokemon?offset=0&limit=400`
       );
       setPokemonData(fetchData.data);
     } catch (error) {
-      console.error("Erro:", error);
+      console.error("Erro fetching pokemons:", error);
     }
   }
 

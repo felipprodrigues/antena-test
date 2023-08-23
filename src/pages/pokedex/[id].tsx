@@ -78,7 +78,7 @@ function PokemonDetails() {
         });
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.error(`Error fetching pokemon ${id}:`, error);
       });
   };
 

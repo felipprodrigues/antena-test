@@ -78,7 +78,7 @@ export const TitleTagLabel = styled("div", {
 
   span: {
     color: "$gray300",
-    fontSize: "clamp(.875rem, 3vw, 1.125rem)",
+    fontSize: "$sm",
   },
 });
 
@@ -93,7 +93,7 @@ export const Stats = styled("div", {
     gap: ".5rem",
 
     span: {
-      fontSize: "clamp(0.875rem, 3vw, 1.125rem)",
+      fontSize: "$sm",
       color: "$gray300",
     },
 
