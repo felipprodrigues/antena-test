@@ -45,21 +45,21 @@ export const ContainerToggleHead = styled("div", {
     listStyleType: "none",
     justifyContent: "center",
     alignItems: "center",
+  },
+});
 
-    li: {
-      cursor: "pointer",
-      padding: "1rem",
-      borderBottom: "2px solid transparent", // Default border style
-      transition: "border-color 0.3s",
+export const ContainerToggleItems = styled("li", {
+  cursor: "pointer",
+  padding: "1rem",
+  borderBottom: "2px solid transparent",
+  transition: "border-color 0.3s",
 
-      "&:hover": {
-        borderColor: "$$borderBottomHover", // Apply border color on hover
-      },
+  "&:hover": {
+    borderColor: "$green300",
+  },
 
-      "&.active": {
-        borderColor: "$$borderBottomActive", // Apply border color for active li
-      },
-    },
+  "&.active": {
+    borderColor: "$green500",
   },
 });
 

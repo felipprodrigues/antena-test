@@ -13,12 +13,14 @@ import {
   RedirectButton,
   Stats,
   TitleTag,
+  // TitleTagType,
 } from "./styles";
 
 import { getColorForType } from "@/helpers/colorParser";
 import Link from "next/link";
 import Pagination from "../pagination";
 import { getBaseStat } from "@/utils/pokemonUtils";
+// import { TitleTagType } from "@/styles/pages/pokedex";
 
 interface Pokemon {
   id: any;
@@ -29,7 +31,6 @@ interface Pokemon {
   };
   types: Array<{ type: { name: string } }>;
   stats: Array<{ stat: { name: string }; base_stat: number }>;
-  // Add other properties as needed
 }
 
 export default function PokedexContent() {
@@ -103,14 +104,13 @@ export default function PokedexContent() {
 
                     <div>
                       {pokemon.types.map((type: any) => (
-                        <div key={type.type.name}>
-                          <span
-                            css={{
-                              $$fontColor: getColorForType(type.type.name),
-                            }}
-                          >
-                            {type.type.name}
-                          </span>
+                        <div
+                          key={type.type.name}
+                          css={{
+                            $$borderColor: getColorForType(type.type.name),
+                          }}
+                        >
+                          <span>{type.type.name}</span>
                         </div>
                       ))}
                     </div>
