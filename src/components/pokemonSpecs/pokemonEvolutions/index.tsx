@@ -7,6 +7,7 @@ import { Container } from "./styles";
 
 // Helpers
 import { capitalize } from "@/helpers/capitalize";
+import { api } from "@/lib/axios";
 
 interface Evolution {
   id: number;
@@ -20,9 +21,7 @@ const PokemonEvolutions: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
   useEffect(() => {
     const fetchPokemonEvolutions = async () => {
       try {
-        const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`
-        );
+        const response = await api.get(`/pokemon-species/${pokemonId}`);
 
         if (response.status === 200) {
           const speciesData = response.data;

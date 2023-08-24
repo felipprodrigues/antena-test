@@ -25,6 +25,7 @@ import {
   TitleTag,
   TitleTagLabel,
 } from "./styles";
+import { api } from "@/lib/axios";
 interface Pokemon {
   id: any;
   name: string;
@@ -41,13 +42,13 @@ export default function PokedexContent() {
 
   const [detailedPokemonData, setDetailedPokemonData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 25;
+  const itemsPerPage = 50;
 
   useEffect(() => {
     async function fetchDetailedPokemonData() {
       const offset = (currentPage - 1) * itemsPerPage;
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${itemsPerPage}`
+      const response = await api.get(
+        `/pokemon?offset=${offset}&limit=${itemsPerPage}`
       );
       const detailedData = await Promise.all(
         response.data.results.map(async (result: any) => {
@@ -58,7 +59,7 @@ export default function PokedexContent() {
 
       const filteredData = handleInputChange
         ? detailedData.filter((pokemon: Pokemon) =>
-            pokemon.name.includes(handleInputChange)
+            pokemon.name.includes(handleInputChange.toLowerCase())
           )
         : detailedData;
 
@@ -132,11 +133,11 @@ export default function PokedexContent() {
                       <h4>{getBaseStat(pokemon, "hp")}</h4>
                     </div>
                     <div>
-                      <span>Atq.</span>
+                      <span>Atk.</span>
                       <h4>{getBaseStat(pokemon, "attack")}</h4>
                     </div>
                     <div>
-                      <span>Defesa</span>
+                      <span>Defense</span>
                       <h4>{getBaseStat(pokemon, "defense")}</h4>
                     </div>
                   </Stats>
@@ -149,7 +150,7 @@ export default function PokedexContent() {
                   as={`/pokedex/${pokemon.id}`}
                   passHref
                 >
-                  Saber mais
+                  More
                 </Link>
               </RedirectButton>
             </Card>

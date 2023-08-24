@@ -1,6 +1,14 @@
 import { styled } from "@stitches/react";
 
 export const Container = styled("div", {
+  "& > div#isLoader": {
+    display: "flex",
+    justifyContent: "center",
+  },
+
+  overflow: "hidden",
+  overflowX: "scroll",
+
   table: {
     borderCollapse: "collapse",
     width: "100%",
