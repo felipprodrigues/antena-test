@@ -1,8 +1,29 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokedex-antena
 
-## Getting Started
+## Descrição
 
-First, run the development server:
+Projeto de desenvolvimento frontend para avaliação de teste da Rádio Antena 1.
+
+## Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone https://github.com/felipprodrigues/antena-test
+```
+
+2 Certifique-se de que a sua versão do Node.js é 16.14 ou acima:
+Ver documentação em [Next.js installation](https://nextjs.org/docs/getting-started/installation)
+
+3. Instale as dependências:
+
+```bash
+npm install
+# or
+yarn
+```
+
+4. Execute um dos comandos abaixo para subir o servidor de desenvolvimento
 
 ```bash
 npm run dev
@@ -12,27 +33,24 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000) com seu browser de preferência para acessar o projeto.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Dependências
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+O projeto utiliza React e Next.js com Typescript. Para desenvolver o layout, foram escolhidas as seguintes dependências: [liste as dependências aqui].
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- **@stitches/react**: Biblioteca para estilização de componentes usando CSS-in-JS, permitindo estilos dinâmicos e em escopo.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **axios**: Biblioteca para requisições HTTP em ambientes Node.js e navegadores, com APIs baseadas em promises.
 
-## Learn More
+- **keen-slider**: Biblioteca de carrossel responsivo para dispositivos sensíveis ao toque.
 
-To learn more about Next.js, take a look at the following resources:
+- **next**: Framework para construção de aplicativos React com renderização no servidor, sistema de rotas e recursos avançados.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **phosphor-react**: Conjunto de ícones utilizáveis como componentes React.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- **react-loader-spinner**: Pacote com componentes de carregamento personalizáveis para indicar progresso ou estados de espera.
 
-## Deploy on Vercel
+- **react-toastify**: Biblioteca para exibição de notificações de toast personalizáveis em seu aplicativo.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- **typescript**: Adiciona tipagem estática à linguagem, melhorando a detecção de erros e o suporte a ferramentas.
