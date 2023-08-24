@@ -2,11 +2,17 @@ import { styled } from "@stitches/react";
 
 export const Container = styled("aside", {
   padding: "2rem",
-  height: "100vh",
+  minHeight: "100vh",
+  height: "100%",
+
+  position: "fixed",
+  top: 0,
+  right: 0,
+  zIndex: 1,
+
   gap: "1rem",
 
   background: "$gray800",
-
   width: "100%",
   maxWidth: "80%",
 
@@ -23,10 +29,6 @@ export const Container = styled("aside", {
   },
 
   flexDirection: "column",
-
-  position: "absolute",
-  right: 0,
-  zIndex: 1,
 
   transition: "all .15s linear",
 
@@ -59,6 +61,8 @@ export const ContainerInfo = styled("div", {
   display: "flex",
   flexDirection: "column",
   gap: "2rem",
+  overflow: "scroll",
+  paddingBottom: "2rem",
 
   h2: {
     textAlign: "center",
