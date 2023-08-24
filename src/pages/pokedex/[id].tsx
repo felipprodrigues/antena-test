@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { api } from "@/lib/axios";
 
 // Context
 import { PokedexContext } from "../_app";
@@ -32,7 +33,7 @@ import { toast } from "react-toastify";
 import PokemonMoves from "@/components/pokemonSpecs/pokemonMoves";
 import PokemonEvolutions from "@/components/pokemonSpecs/pokemonEvolutions";
 import PokemonStats from "@/components/pokemonSpecs/pokemonStats";
-import { css } from "styled-components";
+
 import { getColorForType } from "@/helpers/colorParser";
 
 export interface PokemonList {
@@ -67,19 +68,16 @@ function PokemonDetails() {
     localStorage.setItem("mypokedex", JSON.stringify(myPokedexPokemons));
   }, [myPokedexPokemons]);
 
-  const fetchDataForPokemon = (id: string) => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-      .then((response) => {
-        setPokemonData(response.data);
+  const fetchDataForPokemon = async (id: string) => {
+    try {
+      const pokemonResponse = await api.get(`/pokemon/${id}`);
+      setPokemonData(pokemonResponse.data);
 
-        axios.get(response.data.species.url).then((speciesResponse) => {
-          setPokemonSpecies(speciesResponse.data);
-        });
-      })
-      .catch((error) => {
-        console.error(`Error fetching pokemon ${id}:`, error);
-      });
+      const speciesResponse = await axios.get(pokemonResponse.data.species.url);
+      setPokemonSpecies(speciesResponse.data);
+    } catch (error) {
+      console.error(`Error fetching pokemon ${id}:`, error);
+    }
   };
 
   const handleSectionClick = (sectionName: string) => {

@@ -25,6 +25,7 @@ import {
   TitleTag,
   TitleTagLabel,
 } from "./styles";
+import { api } from "@/lib/axios";
 interface Pokemon {
   id: any;
   name: string;
@@ -46,8 +47,8 @@ export default function PokedexContent() {
   useEffect(() => {
     async function fetchDetailedPokemonData() {
       const offset = (currentPage - 1) * itemsPerPage;
-      const response = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${itemsPerPage}`
+      const response = await api.get(
+        `/pokemon?offset=${offset}&limit=${itemsPerPage}`
       );
       const detailedData = await Promise.all(
         response.data.results.map(async (result: any) => {
@@ -58,7 +59,7 @@ export default function PokedexContent() {
 
       const filteredData = handleInputChange
         ? detailedData.filter((pokemon: Pokemon) =>
-            pokemon.name.includes(handleInputChange)
+            pokemon.name.includes(handleInputChange.toLowerCase())
           )
         : detailedData;
 

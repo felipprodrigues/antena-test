@@ -17,6 +17,7 @@ import pokedexImage from "../assets/pokedexImage.png";
 // Components
 import Sidepanel from "@/components/sidepanel";
 import { PokemonList } from "./pokedex/[id]";
+import { api } from "@/lib/axios";
 
 interface HomeProps {
   isSidepanelOpen: boolean;
@@ -44,12 +45,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   async function fetchPokemonApi() {
     try {
-      const fetchData = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon?offset=0&limit=400`
-      );
+      const fetchData = await api.get(`/pokemon?offset=0&limit=400`);
       setPokemonData(fetchData.data);
     } catch (error) {
-      console.error("Erro fetching pokemons:", error);
+      console.error("Error fetching pokemons:", error);
     }
   }
 

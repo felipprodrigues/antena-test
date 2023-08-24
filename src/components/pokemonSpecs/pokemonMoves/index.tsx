@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { api } from "@/lib/axios";
 
 // Styles
 import { Container } from "./styles";
 
 // Helpers
 import { capitalize } from "@/helpers/capitalize";
+
+import { RotatingLines } from "react-loader-spinner";
 
 interface Move {
   name: string;
@@ -14,13 +17,13 @@ interface Move {
 
 const PokemonMoves: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
   const [moves, setMoves] = useState<Move[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPokemonMoves = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${pokemonId}`
-        );
+        const response = await api.get(`/pokemon/${pokemonId}`);
 
         if (response.status === 200) {
           const pokemonData = response.data;
@@ -39,9 +42,13 @@ const PokemonMoves: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
 
           const moveInfo = await Promise.all(moveInfoPromises);
           setMoves(moveInfo);
+
+          setLoading(false);
         }
       } catch (error) {
         console.error("Error fetching moves:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -50,22 +57,34 @@ const PokemonMoves: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
 
   return (
     <Container id="moveContainer">
-      <table>
-        <thead>
-          <tr>
-            <th>Move Name</th>
-            <th>Move Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {moves.map((move, index) => (
-            <tr key={index}>
-              <td id="label">{capitalize(move.name)}</td>
-              <td>{move.description}</td>
+      {loading ? (
+        <div id="isLoader">
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="4"
+            animationDuration="0.75"
+            width="48"
+            visible={true}
+          />
+        </div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Move Name</th>
+              <th>Move Description</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {moves.map((move, index) => (
+              <tr key={index}>
+                <td id="label">{capitalize(move.name)}</td>
+                <td>{move.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </Container>
   );
 };

@@ -3,7 +3,11 @@ import { styled } from "..";
 export const Container = styled("div", {
   minHeight: "100vh",
   maxWidth: "100%",
-  padding: "0 3.5rem",
+  padding: "0 .75rem",
+
+  "@media (min-width: 768px)": {
+    padding: "0 3.5rem",
+  },
 
   display: "flex",
   flexDirection: "column",
