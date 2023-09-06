@@ -15,10 +15,7 @@ import { getBaseStat } from "@/utils/pokemonUtils";
 
 // Styles
 import { ContainerStats } from "./styles";
-
-interface PokemonStatsProps {
-  pokemonData: any;
-}
+import { PokemonStatsProps } from "@/interfaces";
 
 const PokemonStats = ({ pokemonData }: PokemonStatsProps) => {
   return (

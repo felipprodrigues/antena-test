@@ -26,21 +26,14 @@ import {
   TitleTagLabel,
 } from "./styles";
 import { api } from "@/lib/axios";
-interface Pokemon {
-  id: any;
-  name: string;
-  url: string;
-  sprites: {
-    front_default: string;
-  };
-  types: Array<{ type: { name: string } }>;
-  stats: Array<{ stat: { name: string }; base_stat: number }>;
-}
+
+// Interface
+import { Pokemon } from "@/interfaces";
 
 export default function PokedexContent() {
   const { handleInputChange }: any = useContext(PokedexContext);
 
-  const [detailedPokemonData, setDetailedPokemonData] = useState([]);
+  const [detailedPokemonData, setDetailedPokemonData] = useState<Pokemon[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
 

@@ -8,14 +8,9 @@ import { Container } from "./styles";
 // Helpers
 import { capitalize } from "@/helpers/capitalize";
 import { api } from "@/lib/axios";
+import { Evolution } from "@/interfaces";
 
-interface Evolution {
-  id: number;
-  name: string;
-  sprite: string;
-}
-
-const PokemonEvolutions: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
+const PokemonEvolutions = ({ pokemonId }: any) => {
   const [evolutions, setEvolutions] = useState<Evolution[]>([]);
 
   useEffect(() => {

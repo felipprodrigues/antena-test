@@ -1,10 +1,6 @@
 import { CaretCircleLeft, CaretCircleRight } from "phosphor-react";
 import { Container } from "./styles";
-
-interface PageHandler {
-  handlePrev: () => void;
-  handleNext: () => void;
-}
+import { PageHandler } from "@/interfaces";
 
 export default function Pagination({ handlePrev, handleNext }: PageHandler) {
   return (
