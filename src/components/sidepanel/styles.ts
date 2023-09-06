@@ -13,6 +13,7 @@ export const Container = styled("aside", {
   gap: "1rem",
 
   background: "$gray800",
+  boxShadow: "rgba(114, 114, 120, .4)0 0px 11px 0px",
   width: "100%",
   maxWidth: "80%",
 
