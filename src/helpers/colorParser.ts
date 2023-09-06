@@ -1,5 +1,5 @@
-export const getColorForType = (typeName: any) => {
-  const typeColorMap = {
+export const getColorForType = (typeName: string) => {
+  const typeColorMap: { [key: string]: string } = {
     normal: "#A8A878",
     fire: "#F08030",
     water: "#6890F0",

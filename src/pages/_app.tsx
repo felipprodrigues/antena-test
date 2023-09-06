@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import axios from "axios";
 import type { AppProps } from "next/app";
 import Image from "next/image";
 
@@ -16,18 +15,9 @@ import pokedexImage from "../assets/pokedexImage.png";
 
 // Components
 import Sidepanel from "@/components/sidepanel";
-import { PokemonList } from "./pokedex/[id]";
-import { api } from "@/lib/axios";
 
-interface HomeProps {
-  isSidepanelOpen: boolean;
-  toggleSidepanel: () => void;
-  setHandleInputChange: (string: string) => void;
-  handleInputChange: string;
-  pokemonData: any;
-  setMyPokedexPokemons: React.Dispatch<React.SetStateAction<PokemonList[]>>;
-  myPokedexPokemons: PokemonList;
-}
+import { api } from "@/lib/axios";
+import { HomeProps, PokemonList } from "@/interfaces";
 
 export const PokedexContext = createContext({} as HomeProps);
 
@@ -37,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [isSidepanelOpen, setIsSidepanelOpen] = useState(false);
   const [handleInputChange, setHandleInputChange] = useState("");
   const [pokemonData, setPokemonData] = useState([]);
-  const [myPokedexPokemons, setMyPokedexPokemons] = useState([]);
+  const [myPokedexPokemons, setMyPokedexPokemons] = useState<PokemonList[]>([]);
 
   useEffect(() => {
     fetchPokemonApi();

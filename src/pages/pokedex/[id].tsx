@@ -2,7 +2,7 @@
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { api } from "@/lib/axios";
 
 // Context
@@ -35,20 +35,16 @@ import PokemonEvolutions from "@/components/pokemonSpecs/pokemonEvolutions";
 import PokemonStats from "@/components/pokemonSpecs/pokemonStats";
 
 import { getColorForType } from "@/helpers/colorParser";
-
-export interface PokemonList {
-  name: string;
-  id: number;
-  img: string;
-}
+import { Pokemon, PokemonList } from "@/interfaces";
 
 function PokemonDetails() {
-  const [pokemonData, setPokemonData] = useState(null);
+  const [pokemonData, setPokemonData] = useState<any>(null);
   const [activeSection, setActiveSection] = useState("Stats");
-  const [pokemonSpecies, setPokemonSpecies] = useState("");
+  const [pokemonSpecies, setPokemonSpecies] = useState<any>(null);
 
   const router = useRouter();
   const { id } = router.query;
+  const pokemonId = Array.isArray(id) ? id[0] : id;
 
   const { setMyPokedexPokemons, myPokedexPokemons } =
     useContext(PokedexContext);
@@ -68,7 +64,7 @@ function PokemonDetails() {
     localStorage.setItem("mypokedex", JSON.stringify(myPokedexPokemons));
   }, [myPokedexPokemons]);
 
-  const fetchDataForPokemon = async (id: string) => {
+  const fetchDataForPokemon = async (id: any) => {
     try {
       const pokemonResponse = await api.get(`/pokemon/${id}`);
       setPokemonData(pokemonResponse.data);
@@ -97,7 +93,7 @@ function PokemonDetails() {
   };
 
   const addPokemonToCollection = () => {
-    const newFavoritePokemon: PokemonList = {
+    const newFavoritePokemon = {
       name: pokemonData.name,
       id: pokemonData.id,
       img: pokemonData.sprites.front_default,
@@ -187,9 +183,11 @@ function PokemonDetails() {
             {activeSection === "Stats" && (
               <PokemonStats pokemonData={pokemonData} />
             )}
-            {activeSection === "Moves" && <PokemonMoves pokemonId={id} />}
+            {activeSection === "Moves" && (
+              <PokemonMoves pokemonId={pokemonId} />
+            )}
             {activeSection === "Evolutions" && (
-              <PokemonEvolutions pokemonId={id} />
+              <PokemonEvolutions pokemonId={pokemonId} />
             )}
           </ContainerToggleBody>
         </ContainerBody>

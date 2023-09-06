@@ -9,13 +9,9 @@ import { Container } from "./styles";
 import { capitalize } from "@/helpers/capitalize";
 
 import { RotatingLines } from "react-loader-spinner";
+import { Move } from "@/interfaces";
 
-interface Move {
-  name: string;
-  description: string;
-}
-
-const PokemonMoves: React.FC<{ pokemonId: number }> = ({ pokemonId }) => {
+const PokemonMoves = ({ pokemonId }: any) => {
   const [moves, setMoves] = useState<Move[]>([]);
   const [loading, setLoading] = useState(false);
 

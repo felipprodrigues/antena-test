@@ -17,6 +17,7 @@ import {
   ContainerDetails,
   DeleteButton,
 } from "./styles";
+import { PokemonList } from "@/interfaces";
 
 export default function Sidepanel() {
   const {
